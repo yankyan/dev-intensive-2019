@@ -1,10 +1,11 @@
 package ru.skillbranch.devintensive.models
 
+import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
-class User (
+data class User (
     val id : String,
-    var firstName : String?,
+    val firstName : String?,
     var lastName : String?,
     var avatar : String? = null,
     var rating : Int = 0,
@@ -24,15 +25,12 @@ init {
 }
     companion object Factory{
         private var lastId:Int =-1
-        fun makeUser(fullname:String?): User? {
+        fun makeUser(fullName:String?): User? {
 
         lastId++
-            val parts:List<String>? = fullname?.split(" ")
-               var firstname = parts?.getOrNull(0)
-               var lastName =parts?.getOrNull(1)
-           if (fullname!=null) {return User("$lastId","$firstname" ,"$lastName" )}
-           else{
-               return null}
+
+               var (firstName, lastName) = Utils.parseFullName(fullName)
+                return User(id = "$lastId", firstName = "$firstName", lastName = "$lastName")
         }
 
     }
