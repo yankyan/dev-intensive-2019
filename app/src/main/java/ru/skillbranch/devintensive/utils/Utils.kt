@@ -8,4 +8,10 @@ object Utils {
         var lastName =parts?.getOrNull(1)?.ifEmpty { null }
         return firstName to lastName
     }
+    fun toInitials(firstName:String?, lastName:String?): String? {
+        var firstIn = firstName?.orEmpty()?.trim()?.getOrNull(0)?.toString()?:""
+        var lastIn = lastName?.orEmpty()?.trim()?.getOrNull(0)?.toString()?:""
+
+        return "$firstIn$lastIn".toUpperCase().ifEmpty { null }
+    }
 }
