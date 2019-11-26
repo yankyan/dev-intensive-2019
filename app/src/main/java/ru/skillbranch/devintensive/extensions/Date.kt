@@ -27,7 +27,7 @@ fun Date.add(value:Int, units:TimeUnits = TimeUnits.SECOND): Date {
     this.time=time
     return this
 }
-fun Date.humanizeDiff(date:Date= Date()){
+fun Date.humanizeDiff(date:Date= Date()): String {
     val old:Boolean = (this.time-date.time)<0
 
     date.time= abs(this.time-date.time)
@@ -43,21 +43,21 @@ fun Date.humanizeDiff(date:Date= Date()){
         in 75* MINUTE..22* HOUR-> if (old) {"${typeDate((date.time/ HOUR).toInt(),TimeUnits.HOUR)} назад" }
         else "через ${typeDate((date.time/ HOUR).toInt(), TimeUnits.HOUR)}"
 
-        in 22* HOUR..26* HOUR-> "день назад"
+        in 22* HOUR..26* HOUR-> if (old) {"день назад"} else {"через день"}
         in 26* HOUR..360* DAY-> if (old) {"${typeDate((date.time/ DAY).toInt(),TimeUnits.DAY)} назад"}
         else {"через ${typeDate((date.time/ DAY).toInt(), TimeUnits.DAY)}"}
         else -> if (old) {"более года назад"} else {"более чем через год"}
     }
 
-    println(res)
+    return res
 }
 fun typeDate(i:Int,type:TimeUnits): String {
-
+val i1 = i%100
     val t = when {
-        i in 10..20 -> textDate(type)[0]
-        i % 10 == 1 -> textDate(type)[1]
-        i % 10 in 2..4 -> textDate(type)[2]
-        i % 10 in 5..9 || i % 10 == 0 -> textDate(type)[0]
+        i1 in 10..20 -> textDate(type)[0]
+        i1 % 10 == 1 -> textDate(type)[1]
+        i1 % 10 in 2..4 -> textDate(type)[2]
+        i1 % 10 in 5..9 || i % 10 == 0 -> textDate(type)[0]
 
 
         else -> "херь"
