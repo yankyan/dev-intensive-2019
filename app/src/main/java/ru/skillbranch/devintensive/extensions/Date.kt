@@ -2,6 +2,7 @@ package ru.skillbranch.devintensive.extensions
 
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.abs
 
 
 const val SECOND = 1000L
@@ -27,21 +28,51 @@ fun Date.add(value:Int, units:TimeUnits = TimeUnits.SECOND): Date {
     return this
 }
 fun Date.humanizeDiff(date:Date= Date()){
-     date.time = (date.time-this.time)
+    val old:Boolean = (this.time-date.time)<0
+
+    date.time= abs(this.time-date.time)
+
     val res = when (date.time){
         in 0..SECOND -> "только что"
-        in SECOND..45* SECOND -> "несколько секунд назад"
-        in 45*SECOND..75* SECOND -> "минуту назад"
-        in 75* SECOND..45* MINUTE->"${date.format("mm")} минут назад"
-        in 45* MINUTE..75* MINUTE-> "час назад"
-        in 75* MINUTE..22* HOUR-> "N часов назад"
+        in SECOND..45* SECOND -> if (old) {"несколько секунд назад"} else {"через несколько секунд" }
+        in 45*SECOND..75*SECOND -> if (old) {"минуту назад"} else {"через минуту"}
+        in 45* SECOND..45* MINUTE->if (old) {"${typeDate((date.time/ MINUTE).toInt(),TimeUnits.MINUTE)} назад"}
+        else {"через ${typeDate((date.time/ MINUTE).toInt(), TimeUnits.MINUTE)}"}
+        in 45* MINUTE..75* MINUTE -> if (old) {"час назад"} else {"через час"}
+
+        in 75* MINUTE..22* HOUR-> if (old) {"${typeDate((date.time/ HOUR).toInt(),TimeUnits.HOUR)} назад" }
+        else "через ${typeDate((date.time/ HOUR).toInt(), TimeUnits.HOUR)}"
+
         in 22* HOUR..26* HOUR-> "день назад"
-        in 26* HOUR..360* DAY-> "${date.format("dd")} дней назад"
-        else -> "более года назад"
+        in 26* HOUR..360* DAY-> if (old) {"${typeDate((date.time/ DAY).toInt(),TimeUnits.DAY)} назад"}
+        else {"через ${typeDate((date.time/ DAY).toInt(), TimeUnits.DAY)}"}
+        else -> if (old) {"более года назад"} else {"более чем через год"}
     }
+
     println(res)
 }
+fun typeDate(i:Int,type:TimeUnits): String {
 
+    val t = when {
+        i in 10..20 -> textDate(type)[0]
+        i % 10 == 1 -> textDate(type)[1]
+        i % 10 in 2..4 -> textDate(type)[2]
+        i % 10 in 5..9 || i % 10 == 0 -> textDate(type)[0]
+
+
+        else -> "херь"
+    }
+    return "$i $t"
+}
+
+
+fun textDate(type: TimeUnits) = when(type){
+    TimeUnits.SECOND -> arrayOf("секунд", "секунду", "секунды")
+    TimeUnits.MINUTE-> arrayOf("минут","минуту","минуты")
+    TimeUnits.HOUR-> arrayOf("часов", "час", "часа")
+    TimeUnits.DAY-> arrayOf("дней", "день", "дня")
+
+}
 enum class TimeUnits{
     SECOND,
     MINUTE,
