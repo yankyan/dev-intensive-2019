@@ -51,19 +51,6 @@ fun Date.humanizeDiff(date:Date= Date()): String {
 
     return res
 }
-fun TimeUnits.plural(i:Int): String {
-val i1 = i%100
-    val t = when {
-        i1 in 10..20 -> textDate(this)[0]
-        i1 % 10 == 1 -> textDate(this)[1]
-        i1 % 10 in 2..4 -> textDate(this)[2]
-        i1 % 10 in 5..9 || i % 10 == 0 -> textDate(this)[0]
-
-
-        else -> "херь"
-    }
-    return "$i $t"
-}
 
 
 fun textDate(type: TimeUnits) = when(type){
@@ -77,5 +64,20 @@ enum class TimeUnits{
     SECOND,
     MINUTE,
     HOUR,
-    DAY
+    DAY;
+    fun plural(i:Int): String {
+        val i1 = i%100
+        val t = when {
+            i1 in 10..20 -> textDate(this)[0]
+            i1 % 10 == 1 -> textDate(this)[1]
+            i1 % 10 in 2..4 -> textDate(this)[2]
+            i1 % 10 in 5..9 || i % 10 == 0 -> textDate(this)[0]
+
+
+            else -> "херь"
+        }
+        return "$i $t"
+    }
+
+
 }
