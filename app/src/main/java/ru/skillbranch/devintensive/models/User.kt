@@ -20,9 +20,7 @@ data class User (
         avatar = null
     )
     constructor(id: String):this(id,"Jon","Doe $id")
-init {
-    println(" $firstName $lastName $id")
-}
+
     companion object Factory{
         private var lastId:Int =-1
         fun makeUser(fullName:String?): User {
