@@ -8,7 +8,7 @@ class Bender (var status:Status = Status.NORMAL, var question: Question = Questi
 
         return if (question.ansers.contains(anser)){
             question=question.nextQuestion()
-            "Отлично - это правильный ответ!\n ${question.question}" to status.color
+            "Отлично - ты справился\n ${question.question}" to status.color
 
             }else{
             status = status.nextStatus()
@@ -18,7 +18,7 @@ class Bender (var status:Status = Status.NORMAL, var question: Question = Questi
                 "Это неправильный ответ. Давай все по новой\n ${question.question}" to status.color
 
             }else{
-                "Это не правильный ответ\n ${question.question}" to status.color
+                "Это неправильный ответ\n ${question.question}" to status.color
 
             }
         }
