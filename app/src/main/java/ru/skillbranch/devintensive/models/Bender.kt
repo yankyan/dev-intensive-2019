@@ -8,17 +8,17 @@ class Bender (var status:Status = Status.NORMAL, var question: Question = Questi
 
         return if (question.ansers.contains(anser)){
             question=question.nextQuestion()
-            "Отлично - ты справился\\n ${question.question}" to status.color
+            "Отлично - ты справился\n${question.question}" to status.color
 
             }else{
             status = status.nextStatus()
             if (status.ordinal==0){
 
                 question = Question.NAME
-                "Это неправильный ответ. Давай все по новой\\n ${question.question}" to status.color
+                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
 
             }else{
-                "Это неправильный ответ\\n ${question.question}" to status.color
+                "Это неправильный ответ\n${question.question}" to status.color
 
             }
         }
@@ -55,7 +55,7 @@ class Bender (var status:Status = Status.NORMAL, var question: Question = Questi
             override fun nextQuestion(): Question = IDLE
         },
         IDLE("На этом все, вопросов больше нет", listOf()){
-            override fun nextQuestion(): Question = IDLE
+            override fun nextQuestion(): Question = NAME
         };
 
         abstract fun nextQuestion():Question
