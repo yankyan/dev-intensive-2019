@@ -10,6 +10,7 @@ class Bender (var status:Status = Status.NORMAL, var question: Question = Questi
             question=question.nextQuestion()
             "Отлично - ты справился\n${question.question}" to status.color
 
+
             }else{
             status = status.nextStatus()
             if (status.ordinal==0){
@@ -55,7 +56,7 @@ class Bender (var status:Status = Status.NORMAL, var question: Question = Questi
             override fun nextQuestion(): Question = IDLE
         },
         IDLE("На этом все, вопросов больше нет", listOf()){
-            override fun nextQuestion(): Question = NAME
+            override fun nextQuestion(): Question = IDLE
         };
 
         abstract fun nextQuestion():Question
