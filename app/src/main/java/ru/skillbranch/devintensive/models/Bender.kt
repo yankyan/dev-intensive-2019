@@ -51,7 +51,7 @@ class Bender (var status:Status = Status.NORMAL, var question: Question = Questi
         NAME("Как меня зовут?", listOf("Бендер", "Bender")) {
             override fun nextQuestion(): Question = PROFESSION
             override fun isAnswerValid(anser: String): Pair<Boolean, String> {
-                Log.e("VALIDATION","Валидация ${anser.first().isUpperCase()}  ${anser} ")
+             //   Log.e("VALIDATION","Валидация ${anser.first().isUpperCase()}  $anser ")
                 return anser.first().isUpperCase() to "Имя должно начинаться с заглавной буквы"
             }
 
