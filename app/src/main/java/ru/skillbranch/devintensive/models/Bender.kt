@@ -4,7 +4,7 @@ class Bender (var status:Status = Status.NORMAL, var question: Question = Questi
 
    fun askQuestion() = question.question
 
-    fun listenAnser(anser:String): Pair<String,Triple<Int,Int,Int>> {
+    fun listenAnswer(anser:String): Pair<String,Triple<Int,Int,Int>> {
 
         return if (question.ansers.contains(anser)){
             question=question.nextQuestion()
