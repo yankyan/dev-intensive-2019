@@ -52,13 +52,13 @@ class Bender (var status:Status = Status.NORMAL, var question: Question = Questi
             override fun nextQuestion(): Question = PROFESSION
             override fun isAnswerValid(anser: String): Pair<Boolean, String> {
              //   Log.e("VALIDATION","Валидация ${anser.first().isUpperCase()}  $anser ")
-                return anser.first().isUpperCase() to "Имя должно начинаться с заглавной буквы"
+                return (anser.firstOrNull()?.isUpperCase() ?: false) to "Имя должно начинаться с заглавной буквы"
             }
 
         },
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")){
             override fun isAnswerValid(anser: String): Pair<Boolean, String> {
-                return anser.first().isLowerCase() to "Профессия должна начинаться со строчной буквы"
+                return (anser.firstOrNull()?.isLowerCase() ?: false) to "Профессия должна начинаться со строчной буквы"
             }
 
             override fun nextQuestion(): Question = MATERIAL
